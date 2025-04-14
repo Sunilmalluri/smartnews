@@ -1,1 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart News - Think Daily</title>
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="title-section">
+                <h1>Smart News</h1>
+                <p class="tagline">Think Daily</p>
+            </div>
+            <div class="search-section">
+                <form action="/search" method="get">
+                    <input type="text" placeholder="Search news..." name="q">
+                    <button type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </header>
 
+    <nav class="horizontal-nav">
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li class="dropdown">
+                <a href="#">News</a>
+                <ul class="dropdown-content">
+                    <li><a href="#">AP</a></li>
+                    <li><a href="#">TG</a></li>
+                    <li><a href="#">KU</a></li>
+                    <li><a href="#">Dubai</a></li>
+                    <li><a href="#">India</a></li>
+                </ul>
+            </li>
+            <li><a href="#">Sports</a></li>
+            <li><a href="#">Gold Price</a></li>
+            <li><a href="#">Money Exchange Rate</a></li>
+        </ul>
+    </nav>
+
+    <button class="toggle-menu-btn" onclick="toggleVerticalMenu()">☰ Menu</button>
+
+    <nav class="vertical-nav" id="verticalNav">
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li class="dropdown">
+                <a href="#">News</a>
+                <ul class="dropdown-content">
+                    <li><a href="#">AP</a></li>
+                    <li><a href="#">TG</a></li>
+                    <li><a href="#">KU</a></li>
+                    <li><a href="#">Dubai</a></li>
+                    <li><a href="#">India</a></li>
+                </ul>
+            </li>
+            <li><a href="#">Sports</a></li>
+            <li><a href="#">Gold Price</a></li>
+            <li><a href="#">Money Exchange Rate</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section class="featured-news">
+            <h2>Latest News</h2>
+            <!-- News content will go here -->
+            <article>
+                <h3>Sample News Headline</h3>
+                <p>This is a sample news article summary. The full content would appear here.</p>
+                <a href="#">Read more...</a>
+            </article>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 Smart News. All rights reserved.</p>
+    </footer>
+
+    <script src="scripts/main.js"></script>
+</body>
+</html>
