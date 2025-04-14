@@ -260,3 +260,12 @@ footer {
     transform: rotate(90deg);
     transition: transform 0.3s ease;
 }
+
+.category-indicator {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background-color: #e74c3c;
+    margin-right: 8px;
+    border-radius: 50%;
+}
