@@ -251,3 +251,7 @@ footer {
 .search-section {
     margin-top: 10px; /* Adjust as needed */
 }
+
+.dropdown-content {
+    z-index: 1000;
+}
