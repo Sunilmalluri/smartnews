@@ -244,3 +244,10 @@ footer {
         display: block;
     }
 }
+
+.header-content {
+    align-items: baseline; /* Change from 'center' to 'baseline' */
+}
+.search-section {
+    margin-top: 10px; /* Adjust as needed */
+}
