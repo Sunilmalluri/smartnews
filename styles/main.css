@@ -256,3 +256,7 @@ footer {
     z-index: 1000;
 }
 
+.toggle-menu-btn.active {
+    transform: rotate(90deg);
+    transition: transform 0.3s ease;
+}
