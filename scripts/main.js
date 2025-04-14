@@ -15,3 +15,12 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+
+// Update the toggle function to rotate the icon
+function toggleVerticalMenu() {
+    const btn = document.querySelector('.toggle-menu-btn');
+    const verticalNav = document.getElementById('verticalNav');
+    btn.classList.toggle('active');
+    verticalNav.classList.toggle('active');
+}
