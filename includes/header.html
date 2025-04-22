@@ -1,0 +1,88 @@
+<div class="header-bg">
+  <header class="header-container">
+    <div class="logo-container">
+      <img src="/images/logo.png" alt="Kuwait News Logo" class="logo">
+      <div class="logo-text">
+        <h1 class="site-title">Think</h1>
+        <p class="site-tagline">Beyond The Headlines</p>
+      </div>
+    </div>
+
+    
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Open+Sans:ital,wght@0,400;1,400&display=swap');
+
+  .header-bg {
+    background: #fff;
+    width: 100%;
+    padding: 1rem 0;
+    position: relative;
+    z-index: 1001;
+  }
+
+  .header-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  .logo-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .logo {
+    width: 60px;
+    height: auto;
+  }
+
+  .logo-text {
+    color: #000;
+  }
+
+  .site-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin: 0;
+    letter-spacing: 0.05em;
+    color: #000;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+  }
+
+  .site-tagline {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 400;
+    font-style: italic;
+    margin: 0;
+    color: #333;
+    letter-spacing: 0.03em;
+  }
+
+  
+  @media (max-width: 768px) {
+    .header-container {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.9rem;
+    }
+
+    .logo {
+      width: 50px;
+    }
+
+    .site-title {
+      font-size: 1.6rem;
+    }
+
+    .site-tagline {
+      font-size: 0.7rem;
+    }
+
+  
