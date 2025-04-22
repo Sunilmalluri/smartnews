@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="కువైట్ లో తాజా కరెన్సీ ఎక్స్ఛేంజ్ రేట్లు - Money Exchange Rates">
+    <title>మనీ ఎక్స్ఛేంజ్ రేట్లు - కువైట్ తెలుగు వార్తలు</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header and Navigation injected by scripts.js -->
+
+    <!-- Main Content -->
+    <div class="container">
+        <main class="main-content">
+            <article class="news-section">
+                <h1 class="section-title">మనీ ఎక్స్ఛేంజ్ రేట్లు</h1>
+                <div class="news-meta">
+                    <span><i class="fas fa-sync-alt"></i> చివరిగా నవీకరించబడింది: <span id="last-updated"></span></span>
+                </div>
+
+                <!-- Exchange Rates Table -->
+                <section class="price-table-container">
+                    <h2><i class="fas fa-exchange-alt"></i> తాజా కరెన్సీ రేట్లు</h2>
+                    <div class="table-responsive">
+                        <table class="price-table">
+<!--                             <caption>కరెన్సీ ఎక్స్ఛేంజ్ రేట్లు</caption> -->
+                            <div>
+                                <br>
+                                <div id="oanda_ecc">
+                                    <!-- Note: If you alter or remove the following code, the embedded currency widget will not work-->
+                                    <script src="https://www.oanda.com/embedded/converter/get/b2FuZGFlY2N1c2VyLy9kZWZhdWx0/?lang=en"></script>
+                                </div>
+                                <br>
+                            </div>
+<!--                             <thead>
+                                <tr>
+                                    <th scope="col">కరెన్సీ</th>
+                                    <th scope="col">రేటు</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>KWD to INR</td>
+                                    <td>277.04</td>
+                                </tr>
+                                <tr>
+                                    <td>USD to INR</td>
+                                    <td>85.29</td>
+                                </tr>
+                                <tr>
+                                    <td>EUR to INR</td>
+                                    <td>93.86</td>
+                                </tr>
+                                <tr>
+                                    <td>GBP to INR</td>
+                                    <td>110.50</td>
+                                </tr>
+                                <tr>
+                                    <td>AED to INR</td>
+                                    <td>23.22</td>
+                                </tr>
+                            </tbody> -->
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Additional Information -->
+                <section class="info-container">
+                    <h2><i class="fas fa-info-circle"></i> ఎక్స్ఛేంజ్ రేట్ల గురించి</h2>
+                    <div class="info-content">
+                        <p>ఈ పేజీలో చూపించిన కరెన్సీ ఎక్స్ఛేంజ్ రేట్లు సమయానుసారం నవీకరించబడతాయి. ఖచ్చితమైన రేట్ల కోసం స్థానిక బ్యాంకులు లేదా ఎక్స్ఛేంజ్ కేంద్రాలను సంప్రదించండి.</p>
+                    </div>
+                </section>
+            </article>
+        </main>
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <!-- Ad Banner -->
+            <div class="widget">
+                <div class="ad-banner">
+                    <h3>గోల్డ్ జ్వెలరీ</h3>
+                    <p>కువైట్‌లోని ఉత్తమ జ్వెలరీ దుకాణాలు</p>
+                    <a href="#" class="subscribe-btn">ఇక్కడ క్లిక్ చేయండి</a>
+                </div>
+            </div>
+
+            <!-- Subscribe Widget -->
+            <div class="widget">
+                <h3 class="widget-title"><i class="fas fa-envelope"></i> సబ్‌స్క్రయిబ్ చేయండి</h3>
+                <p>తాజా ఎక్స్ఛేంజ్ రేట్ల కోసం మా న్యూస్‌లెటర్‌కు సబ్‌స్క్రయిబ్ చేయండి</p>
+                <form class="subscribe-form" id="newsletter-form">
+                    <input type="email" class="subscribe-input" placeholder="మీ ఇమెయిల్" required>
+                    <button type="submit" class="subscribe-btn">సబ్‌స్క్రయిబ్</button>
+                </form>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-links">
+            <a href="about.html">మా గురించి</a>
+            <a href="contact.html">సంప్రదించండి</a>
+            <a href="advertise.html">ప్రకటించండి</a>
+            <a href="privacy.html">గోప్యతా విధానం</a>
+        </div>
+        <div class="social-links">
+            <a href="#" aria-label="Facebook"><i class="fab fa-facebook social-icon"></i></a>
+            <a href="#" aria-label="Twitter"><i class="fab fa-twitter social-icon"></i></a>
+            <a href="#" aria-label="Instagram"><i class="fab fa-instagram social-icon"></i></a>
+            <a href="#" aria-label="YouTube"><i class="fab fa-youtube social-icon"></i></a>
+            <a href="#" aria-label="WhatsApp"><i class="fab fa-whatsapp social-icon"></i></a>
+        </div>
+        <p class="copyright">© 2025 కువైట్ తెలుగు వార్తలు. అన్ని హక్కులు ప్రత్యేకించబడినవి.</p>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="scripts.js"></script>
+    <script>
+        // Update last updated time
+        function updateLastUpdated() {
+            try {
+                const now = new Date();
+                const options = { 
+                    day: '2-digit', 
+                    month: '2-digit', 
+                    year: 'numeric',
+                    hour: '2-digit', 
+                    minute: '2-digit',
+                    hour12: true
+                };
+                const lastUpdated = document.getElementById('last-updated');
+                if (lastUpdated) {
+                    lastUpdated.textContent = now.toLocaleString('te-IN', options);
+                }
+            } catch (error) {
+                console.error('Time update error:', error);
+            }
+        }
+        
+        updateLastUpdated();
+    </script>
+</body>
+</html>
