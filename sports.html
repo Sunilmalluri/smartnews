@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="తాజా క్రీడా వార్తలు IPL 2025 - కువైట్ తెలుగు వార్తలు">
+    <meta name="keywords" content="క్రీడలు, IPL, తెలుగు వార్తలు, కువైట్">
+    <title>క్రీడలు - కువైట్ తెలుగు వార్తలు</title>
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header and Navigation injected by scripts.js -->
+
+    <!-- Content Area -->
+    <div class="container">
+        <main class="main-content">
+            <section class="news-section">
+                <h2 class="section-title">IPL 2025 తాజా మ్యాచ్‌లు</h2>
+                <p class="news-meta">నవీకరణ తేదీ: 05-04-2025 | సమయం: 08:45 PM</p>
+
+                <!-- Recent Matches Table -->
+                <h3>ఇటీవలి మ్యాచ్‌లు</h3>
+                <table class="price-table">
+                    <thead>
+                        <tr>
+                            <th>మ్యాచ్</th>
+                            <th>స్కోరు</th>
+                            <th>ఫలితం</th>
+                            <th>తేదీ & సమయం</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>CSK vs MI</td>
+                            <td>182/5 - 176/8</td>
+                            <td>CSK won by 6 runs</td>
+                            <td>05-04-2025 | 7:30 PM</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- Upcoming Matches Table -->
+                <h3>రాబోయే మ్యాచ్‌లు</h3>
+                <table class="price-table">
+                    <thead>
+                        <tr>
+                            <th>తేదీ</th>
+                            <th>సమయం</th>
+                            <th>టీమ్ 1</th>
+                            <th>టీమ్ 2</th>
+                            <th>స్థలం</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>06-04-2025</td>
+                            <td>7:30 PM</td>
+                            <td>RCB</td>
+                            <td>SRH</td>
+                            <td>బెంగళూరు</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- Social Sharing -->
+                <div class="social-share">
+                    <p>ఈ సమాచారాన్ని షేర్ చేయండి:</p>
+                    <a href="#" class="share-btn whatsapp"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#" class="share-btn twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="share-btn facebook"><i class="fab fa-facebook"></i></a>
+                </div>
+            </section>
+        </main>
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="widget">
+                <h3 class="widget-title">ప్రకటన</h3>
+                <div class="ad-banner">ప్రకటన స్థలం</div>
+            </div>
+            <div class="widget">
+                <h3 class="widget-title">సబ్‌స్క్రైబ్ చేయండి</h3>
+                <form class="subscribe-form">
+                    <input type="email" class="subscribe-input" placeholder="మీ ఇమెయిల్">
+                    <button type="submit" class="subscribe-btn">సబ్‌స్క్రైబ్</button>
+                </form>
+            </div>
+            <div class="widget">
+                <h3 class="widget-title">మమ్మల్ని అనుసరించండి</h3>
+                <div class="social-links">
+                    <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-links">
+            <a href="/privacy.html">గోప్యతా విధానం</a>
+            <a href="/contact.html">సంప్రదించండి</a>
+        </div>
+        <p class="copyright">© 2025 కువైట్ తెలుగు వార్తలు. అన్ని హక్కులు రిజర్వ్ చేయబడ్డాయి.</p>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="/scripts.js"></script>
+    <script>
+        document.querySelectorAll('.share-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const url = window.location.href;
+                const text = 'క్రీడలు - కువైట్ తెలుగు వార్తలు';
+                if (btn.classList.contains('whatsapp')) {
+                    window.open(`https://wa.me/?text=${encodeURIComponent(text + ' ' + url)}`);
+                } else if (btn.classList.contains('twitter')) {
+                    window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`);
+                } else if (btn.classList.contains('facebook')) {
+                    window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
