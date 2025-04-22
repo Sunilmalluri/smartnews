@@ -1,84 +1,91 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="te">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart News - Think Daily</title>
-    <link rel="stylesheet" href="styles/main.css">
+    <meta name="description" content="కువైట్ తెలుగు వార్తలు - తాజా వార్తలు">
+    <title>కువైట్ తెలుగు వార్తలు</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <header>
-        <div class="header-content">
-            <div class="title-section">
-                <h1>Smart News</h1>
-                <p class="tagline">Think Daily</p>
-            </div>
-            <div class="search-section">
-                <form action="/search" method="get">
-                    <input type="text" placeholder="Search news..." name="q">
-                    <button type="submit">Search</button>
-                </form>
-            </div>
+    <div class="top-wrapper"></div>
+    <div class="content-bg">
+        <div class="container">
+            <main class="main-content">
+                <section class="hero">
+                    <h1 class="hero-title">కువైట్ తెలుగు వార్తలకు స్వాగతం</h1>
+                    <p class="hero-text">తాజా వార్తలు మరియు నవీకరణల కోసం మమ్మల్ని అనుసరించండి</p>
+                </section>
+                <section class="news-section">
+                    <h2 class="section-title">వార్తలు</h2>
+                    <div class="category-grid">
+<!--                         <a href="news/kuwait.html" class="category-card">
+                            <img src="images/kuwait1.jpg" alt="Kuwait News">
+                            <h3>కువైట్</h3>
+                        </a>
+                        <a href="news/andhra-pradesh.html" class="category-card">
+                            <img src="images/ap1.jpg" alt="Andhra Pradesh News">
+                            <h3>ఆంధ్రప్రదేశ్</h3>
+                        </a>
+                        <a href="news/telangana.html" class="category-card">
+                            <img src="images/ts1.jpg" alt="Telangana News">
+                            <h3>తెలంగాణ</h3>
+                        </a>
+                        <a href="news/india.html" class="category-card">
+                            <img src="images/india1.jpg" alt="India News">
+                            <h3>భారతదేశం</h3>
+                        </a> -->
+                    </div>
+                </section>
+            </main>
+            <aside class="sidebar">
+                <div class="widget">
+                    <h3 class="widget-title">ప్రకటన</h3>
+                    <div class="ad-banner">ప్రకటన స్థలం</div>
+                </div>
+                <div class="widget">
+                    <h3 class="widget-title">సబ్‌స్క్రైబ్ చేయండి</h3>
+                    <form class="subscribe-form">
+                        <input type="email" class="subscribe-input" placeholder="మీ ఇమెయిల్">
+                        <button type="submit" class="subscribe-btn">సబ్‌స్క్రైబ్</button>
+                    </form>
+                </div>
+                <div class="widget">
+                    <h3 class="widget-title">మమ్మల్ని అనుసరించండి</h3>
+                    <div class="social-links">
+                        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </aside>
         </div>
-    </header>
+    </div>
 
-    <nav class="horizontal-nav">
-        <ul>
-            <li><a href="#">Home</a></li>
-            <li class="dropdown">
-                <a href="#">News</a>
-                <ul class="dropdown-content">
-                    <li><a href="#">AP</a></li>
-                    <li><a href="#">TG</a></li>
-                    <li><a href="#">KU</a></li>
-                    <li><a href="#">Dubai</a></li>
-                    <li><a href="#">India</a></li>
-                </ul>
-            </li>
-            <li><a href="#">Sports</a></li>
-            <li><a href="#">Gold Price</a></li>
-            <li><a href="#">Money Exchange Rate</a></li>
-        </ul>
-    </nav>
-
-    <button class="toggle-menu-btn" onclick="toggleVerticalMenu()">☰ Menu</button>
-
-    <nav class="vertical-nav" id="verticalNav">
-        <ul>
-            <li><a href="#">Home</a></li>
-            <li class="dropdown">
-                <a href="#">News</a>
-                <ul class="dropdown-content">
-                    <li><a href="#">AP</a></li>
-                    <li><a href="#">TG</a></li>
-                    <li><a href="#">KU</a></li>
-                    <li><a href="#">Dubai</a></li>
-                    <li><a href="#">India</a></li>
-                </ul>
-            </li>
-            <li><a href="#">Sports</a></li>
-            <li><a href="#">Gold Price</a></li>
-            <li><a href="#">Money Exchange Rate</a></li>
-        </ul>
-    </nav>
-
-    <main>
-        <section class="featured-news">
-            <h2>Latest News</h2>
-            <!-- News content will go here -->
-            <article>
-                <h3>Sample News Headline</h3>
-                <p>This is a sample news article summary. The full content would appear here.</p>
-                <a href="#">Read more...</a>
-            </article>
-        </section>
-    </main>
-
-    <footer>
-        <p>&copy; 2023 Smart News. All rights reserved.</p>
+    <div style="position: relative; width: 100%; padding-top: 177.78%; /* Aspect ratio: 1600/900 * 100 */">
+    <iframe 
+        src="https://rss.app/embed/v1/magazine/tKgGIHn23gj6lghI" 
+        frameborder="0" 
+        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;">
+    </iframe>
+</div>
+    <footer class="footer">
+        <div class="footer-links">
+            <a href="about.html">మా గురించి</a>
+            <a href="contact.html">సంప్రదించండి</a>
+            <a href="advertise.html">ప్రకటించండి</a>
+            <a href="privacy.html">గోప్యతా విధానం</a>
+        </div>
+        <div class="social-links">
+            <a href="#" aria-label="Facebook"><i class="fab fa-facebook social-icon"></i></a>
+            <a href="#" aria-label="Twitter"><i class="fab fa-twitter social-icon"></i></a>
+            <a href="#" aria-label="Instagram"><i class="fab fa-instagram social-icon"></i></a>
+            <a href="#" aria-label="YouTube"><i class="fab fa-youtube social-icon"></i></a>
+            <a href="#" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+        </div>
+        <p class="copyright">© 2025 కువైట్ తెలుగు వార్తలు. అన్ని హక్కులు ప్రత్యేకించబడినవి.</p>
     </footer>
-
-    <script src="scripts/main.js"></script>
+    <script src="scripts.js"></script>
 </body>
 </html>
-
