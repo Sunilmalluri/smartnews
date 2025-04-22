@@ -1,0 +1,317 @@
+<div class="nav-container">
+    <nav>
+        <div class="menu-wrapper">
+            <button class="menu-btn" aria-label="Toggle vertical menu">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-menu-horizontal" id="horizontalMenu">
+                <li><a href="/index.html" class="nav-link">హోమ్</a></li>
+                <li class="dropdown">
+                    <a href="#" class="nav-link dropdown-toggle">వార్తలు <i class="fas fa-caret-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/news/kuwait.html" class="nav-link">కువైట్</a></li>
+                        <li><a href="/news/andhra-pradesh.html" class="nav-link">ఆంధ్రప్రదేశ్</a></li>
+                        <li><a href="/news/telangana.html" class="nav-link">తెలంగాణ</a></li>
+                        <li><a href="/news/india.html" class="nav-link">భారతదేశం</a></li>
+                    </ul>
+                </li>
+                <li><a href="/sports.html" class="nav-link">క్రీడలు</a></li>
+                <li><a href="/gold-price.html" class="nav-link">గోల్డ్ ధర</a></li>
+                <li><a href="/money-exchange-rate.html" class="nav-link">మనీ ఎక్స్ఛేంజ్ రేటు</a></li>
+            </ul>
+        </div>
+
+        <ul class="nav-menu-toggle" id="toggleMenu">
+            <li><a href="/index.html" class="nav-link">హోమ్</a></li>
+            <li class="dropdown">
+                <a href="#" class="nav-link dropdown-toggle">వార్తలు <i class="fas fa-caret-right"></i></a>
+                <ul class="dropdown-menu">
+                    <li><a href="/news/kuwait.html" class="nav-link">కువైట్</a></li>
+                    <li><a href="/news/andhra-pradesh.html" class="nav-link">ఆంధ్రప్రదేశ్</a></li>
+                    <li><a href="/news/telangana.html" class="nav-link">తెలంగాణ</a></li>
+                    <li><a href="/news/india.html" class="nav-link">భారతదేశం</a></li>
+                </ul>
+            </li>
+            <li><a href="/sports.html" class="nav-link">క్రీడలు</a></li>
+            <li><a href="/gold-price.html" class="nav-link">గోల్డ్ ధర</a></li>
+            <li><a href="/money-exchange-rate.html" class="nav-link">మనీ ఎక్స్ఛేంజ్ రేటు</a></li>
+        </ul>
+    </nav>
+</div>
+
+<style>
+    /* Navigation Styles */
+    .nav-container {
+        background: linear-gradient(to right, hsl(0, 0%, 25%), hsl(210, 10%, 35%));
+        width: 100%;
+        position: relative;
+        z-index: 1000;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        overflow: visible;
+    }
+
+    nav {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 1rem;
+        position: relative;
+    }
+
+    .menu-wrapper {
+        display: flex;
+        align-items: center;
+        background: linear-gradient(to right, hsl(0, 0%, 25%), hsl(210, 10%, 35%));
+        padding: 0.3rem 0;
+        min-height: 36px;
+        width: 100%;
+    }
+
+    .menu-btn {
+        background: none;
+        border: none;
+        font-size: 1.3rem;
+        cursor: pointer;
+        color: #ffffff;
+        padding: 0.4rem;
+        margin-right: 0.5rem;
+    }
+
+    .nav-menu-horizontal,
+    .nav-menu-toggle {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        background: transparent;
+    }
+
+    .nav-menu-horizontal {
+        display: flex;
+        gap: 6px;
+        align-items: center;
+        position: relative;
+    }
+
+    .nav-menu-toggle {
+        position: absolute;
+        top: 36px;
+        left: 0;
+        width: fit-content;
+        background: linear-gradient(to right, hsl(0, 0%, 25%), hsl(210, 10%, 35%));
+        max-height: 0;
+        overflow: hidden;
+        opacity: 0;
+        transition: max-height 0.3s ease, opacity 0.3s ease, transform 0.3s ease;
+        transform: translateY(-10px);
+        z-index: 1001;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .nav-menu-toggle.active {
+        max-height: 500px;
+        opacity: 1;
+        transform: translateY(0);
+        padding: 0.5rem;
+    }
+
+    .nav-link {
+        font-family: 'Noto Sans Telugu', 'Open Sans', sans-serif;
+        font-size: 0.85rem;
+        font-weight: 500;
+        color: #ffffff;
+        text-decoration: none;
+        padding: 0.4rem 0.8rem;
+        display: block;
+        border-radius: 4px;
+        white-space: nowrap;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+        background: hsla(0, 0%, 90%, 0.3);
+    }
+
+    .dropdown {
+        position: relative;
+    }
+
+    .dropdown-toggle {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        cursor: pointer;
+    }
+
+    .dropdown-menu {
+        display: none;
+        background: linear-gradient(to bottom, hsl(0, 0%, 35%), hsl(210, 10%, 45%));
+        border-radius: 4px;
+        list-style: none;
+        padding: 0.5rem 0;
+        z-index: 1001;
+        min-width: 100%;
+        opacity: 0;
+        transform: translateY(-5px);
+        transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    .dropdown.open .dropdown-menu {
+        display: block;
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .dropdown-menu .nav-link {
+        padding: 0.4rem 0.8rem;
+    }
+
+    /* Desktop Styles */
+    @media (min-width: 769px) {
+        .nav-menu-horizontal {
+            display: flex;
+            width: 100%;
+        }
+
+        .nav-menu-horizontal .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: fit-content;
+            max-width: 200px;
+            opacity: 0;
+            transform: translateY(-5px);
+            transition: opacity 0.2s ease, transform 0.2s ease;
+        }
+
+        .nav-menu-horizontal .dropdown:hover .dropdown-menu,
+        .nav-menu-horizontal .dropdown.open .dropdown-menu {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .menu-btn {
+            display: block;
+        }
+
+        .nav-menu-toggle {
+            display: block;
+            width: fit-content;
+            max-width: 300px;
+            top: 36px;
+            left: 0rem;
+        }
+
+        .nav-menu-toggle .dropdown-menu {
+            position: relative;
+            top: 0;
+            left: 0;
+            min-width: 100%;
+            box-shadow: none;
+        }
+
+        .nav-menu-toggle .dropdown:hover .dropdown-menu,
+        .nav-menu-toggle .dropdown.open .dropdown-menu {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+            padding: 0.5rem 0;
+        }
+    }
+
+    /* Mobile Styles */
+    @media (max-width: 768px) {
+        .nav-container {
+            background: linear-gradient(to right, hsl(0, 0%, 25%), hsl(210, 10%, 35%));
+        }
+
+        .menu-wrapper {
+            background: linear-gradient(to right, hsl(0, 0%, 25%), hsl(210, 10%, 35%));
+        }
+
+        .menu-btn {
+            display: block;
+            flex-shrink: 0;
+        }
+
+        .nav-menu-horizontal {
+            display: flex;
+            gap: 4px;
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            white-space: nowrap;
+            background: transparent;
+        }
+
+        .nav-menu-horizontal::-webkit-scrollbar {
+            height: 4px;
+        }
+
+        .nav-menu-horizontal::-webkit-scrollbar-thumb {
+            background: hsl(210, 10%, 45%);
+            border-radius: 4px;
+        }
+
+        .nav-menu-horizontal::-webkit-scrollbar-track {
+            background: hsl(0, 0%, 25%);
+        }
+
+        .nav-menu-horizontal .nav-link {
+            font-size: 0.8rem;
+            padding: 0.3rem 0.6rem;
+        }
+
+        .nav-menu-horizontal .dropdown-toggle {
+            cursor: pointer;
+            pointer-events: auto;
+        }
+
+        .nav-menu-horizontal .dropdown {
+            position: relative;
+            z-index: 1002;
+        }
+
+        .nav-menu-horizontal .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: fit-content;
+            max-width: 200px;
+            background: linear-gradient(to bottom, hsl(0, 0%, 35%), hsl(210, 10%, 45%));
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            z-index: 1002;
+            display: none;
+            opacity: 0;
+            transform: translateY(0);
+            transition: opacity 0.2s ease, transform 0.2s ease;
+        }
+
+        .nav-menu-horizontal .dropdown.open .dropdown-menu {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .nav-menu-toggle {
+            display: block;
+            width: fit-content;
+            max-width: 90%;
+            top: 36px;
+            left: 0rem;
+            background: linear-gradient(to right, hsl(0, 0%, 25%), hsl(210, 10%, 35%));
+        }
+
+        .nav-menu-toggle .dropdown-menu {
+            position: relative;
+            top: 0;
+            left: 0;
+            min-width: 100%;
+            box-shadow: none;
+            background: linear-gradient(to bottom, hsl(0, 0%, 35%), hsl(210, 10%, 45%));
+        }
+
+        .nav-menu-toggle .dropdown.open .dropdown-menu {
+            display: block;
+            padding: 0.5rem 0;
+        }
+    }
+</style>
