@@ -16,9 +16,9 @@ async function loadComponent(url, targetElement, position = 'beforeend') {
 async function fetchNews(category = null, retries = 3, delay = 100) {
     for (let i = 0; i < retries; i++) {
         try {
-            if (typeof window.newsData === 'undefined') {
+            if (typeof window.newsData === 'undefined' || !Array.isArray(window.newsData)) {
                 if (i === retries - 1) {
-                    throw new Error('newsData is not defined after retries. Ensure news.js is loaded.');
+                    throw new Error('newsData is not defined or not an array after retries. Ensure news-telangana.js is loaded.');
                 }
                 await new Promise(resolve => setTimeout(resolve, delay));
                 continue;
@@ -64,6 +64,18 @@ async function renderNews(category = null) {
             </div>
         </article>
     `).join('');
+}
+
+function toggleReadMore(articleId) {
+    const article = document.getElementById(articleId);
+    const fullText = article.querySelector('.full-text');
+    const readMoreLink = article.querySelector('.read-more');
+    const isExpanded = fullText.style.display === 'block';
+
+    fullText.style.display = isExpanded ? 'none' : 'block';
+    readMoreLink.innerHTML = isExpanded
+        ? `మరిన్ని చదవండి <i class="fas fa-arrow-right"></i>`
+        : `తక్కువ చూడండి <i class="fas fa-arrow-up"></i>`;
 }
 
 async function loadCommonComponents() {
@@ -176,6 +188,9 @@ style.textContent = `
         width: 100%;
         position: relative;
         z-index: 1000;
+    }
+    .full-text {
+        display: none;
     }
 `;
 document.head.appendChild(style);
