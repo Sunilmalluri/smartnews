@@ -13,18 +13,24 @@ async function loadComponent(url, targetElement, position = 'beforeend') {
     }
 }
 
-async function fetchNews(category = null, retries = 3, delay = 100) {
+async function fetchNews(category = null, subCategory = null, retries = 3, delay = 100) {
     for (let i = 0; i < retries; i++) {
         try {
             if (typeof window.newsData === 'undefined' || !Array.isArray(window.newsData)) {
                 if (i === retries - 1) {
-                    throw new Error('newsData is not defined or not an array after retries. Ensure news-telangana.js is loaded.');
+                    throw new Error('newsData is not defined or not an array after retries.');
                 }
                 await new Promise(resolve => setTimeout(resolve, delay));
                 continue;
             }
-            console.log('Fetched news data:', window.newsData);
-            return category ? window.newsData.filter(article => article.category === category) : window.newsData;
+            let filteredData = window.newsData;
+            if (category) {
+                filteredData = filteredData.filter(article => article.category === category);
+            }
+            if (subCategory && subCategory !== 'All') {
+                filteredData = filteredData.filter(article => article.subCategory === subCategory);
+            }
+            return filteredData;
         } catch (error) {
             console.error('Error fetching news:', error.message);
             return [];
@@ -33,49 +39,81 @@ async function fetchNews(category = null, retries = 3, delay = 100) {
     return [];
 }
 
-async function renderNews(category = null) {
+async function renderNews(category = null, subCategory = null) {
     const newsContainer = document.querySelector('.news-grid');
     if (!newsContainer) {
         console.error('News container (.news-grid) not found');
         return;
     }
 
-    const articles = await fetchNews(category);
-    console.log('Articles to render:', articles);
+    const articles = await fetchNews(category, subCategory);
     if (articles.length === 0) {
         newsContainer.innerHTML = '<p>వార్తలు అందుబాటులో లేవు.</p>';
         return;
     }
 
-    newsContainer.innerHTML = articles.map(article => `
-        <article class="news-card" id="${article.id}">
-            <img src="${article.image}" alt="${article.alt}" class="news-image">
-            <div class="news-body">
-                <h3 class="news-title">${article.title}</h3>
-                <div class="news-meta">
-                    <span><i class="far fa-calendar-alt"></i> ${article.date}</span>
-                    <span><i class="far fa-clock"></i> ${article.time}</span>
-                </div>
-                <p class="news-excerpt">${article.excerpt}</p>
-                <div class="full-text">
-                    <p>${article.fullText}</p>
-                </div>
-                <a href="#" class="read-more" onclick="toggleReadMore('${article.id}')">మరిన్ని చదవండి <i class="fas fa-arrow-right"></i></a>
+    newsContainer.innerHTML = articles.map(article => {
+        const fullText = article.fullText
+            .replace(/\n\n/g, '</p><p>')
+            .replace(/\n- /g, '</li><li>')
+            .replace(/\n/g, ' ')
+            .replace(/<li>/, '<ul><li>')
+            .replace(/<\/li>$/, '</li></ul>')
+            .replace(/^/, '<p>')
+            .replace(/$/, '</p>');
+        const articleUrl = `${window.location.origin}${window.location.pathname}#${article.id}`;
+        const encodedTitle = encodeURIComponent(article.title);
+        const encodedUrl = encodeURIComponent(articleUrl);
+        const socialShare = `
+            <div class="social-share">
+                <a href="https://wa.me/?text=${encodedTitle}%20${encodedUrl}" class="share-btn whatsapp" target="_blank" aria-label="Share on WhatsApp" tabindex="0">
+                    <i class="fab fa-whatsapp"></i>
+                </a>
+                <a href="https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}" class="share-btn facebook" target="_blank" aria-label="Share on Facebook" tabindex="0">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="https://twitter.com/intent/tweet?text=${encodedTitle}&url=${encodedUrl}" class="share-btn twitter" target="_blank" aria-label="Share on Twitter" tabindex="0">
+    <svg class="x-icon" viewBox="0 0 24 24" width="1rem" height="1rem" fill="currentColor">
+        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+    </svg>
+</a>
+                </a>
+                <a href="https://t.me/share/url?url=${encodedUrl}&text=${encodedTitle}" class="share-btn telegram" target="_blank" aria-label="Share on Telegram" tabindex="0">
+                    <i class="fab fa-telegram-plane"></i>
+                </a>
             </div>
-        </article>
-    `).join('');
-}
+        `;
+        return `
+            <article class="news-card preview" id="${article.id}" tabindex="0" aria-expanded="false">
+                <div class="news-image-wrapper">
+                    <img src="${article.image}" alt="${article.alt}" class="news-image" loading="lazy">
+                </div>
+                <div class="news-content">
+                    <h3 class="news-title">${article.title}</h3>
+                    <div class="news-meta">
+                        <span><i class="far fa-calendar-alt"></i> ${article.date}</span>
+                        <span><i class="far fa-clock"></i> ${article.time}</span>
+                    </div>
+                    <p class="news-excerpt">${article.excerpt}</p>
+                    <div class="full-text">${fullText}</div>
+                    ${socialShare}
+                </div>
+            </article>
+        `;
+    }).join('');
 
-function toggleReadMore(articleId) {
-    const article = document.getElementById(articleId);
-    const fullText = article.querySelector('.full-text');
-    const readMoreLink = article.querySelector('.read-more');
-    const isExpanded = fullText.style.display === 'block';
-
-    fullText.style.display = isExpanded ? 'none' : 'block';
-    readMoreLink.innerHTML = isExpanded
-        ? `మరిన్ని చదవండి <i class="fas fa-arrow-right"></i>`
-        : `తక్కువ చూడండి <i class="fas fa-arrow-up"></i>`;
+    document.querySelectorAll('.news-card').forEach(card => {
+        card.addEventListener('click', () => {
+            const fullText = card.querySelector('.full-text');
+            const imageWrapper = card.querySelector('.news-image-wrapper');
+            const isExpanded = card.getAttribute('aria-expanded') === 'true';
+            fullText.style.display = isExpanded ? 'none' : 'block';
+            card.setAttribute('aria-expanded', !isExpanded);
+            card.classList.toggle('preview', isExpanded);
+            card.classList.toggle('expanded', !isExpanded);
+            imageWrapper.classList.toggle('expanded', !isExpanded);
+        });
+    });
 }
 
 async function loadCommonComponents() {
@@ -93,7 +131,7 @@ async function loadCommonComponents() {
 
         const menuBtn = document.querySelector('.menu-btn');
         const navMenuToggle = document.querySelector('.nav-menu-toggle');
-        if (menuBtn && navMenuToggle) {
+        if (menuBtn && navMenuToggle && window.innerWidth < 769) {
             menuBtn.addEventListener('click', () => {
                 const isActive = navMenuToggle.classList.toggle('active');
                 menuBtn.setAttribute('aria-expanded', isActive);
@@ -104,36 +142,6 @@ async function loadCommonComponents() {
                     });
                 }
             });
-
-            if (window.innerWidth >= 769) {
-                menuBtn.addEventListener('mouseenter', () => {
-                    navMenuToggle.classList.add('active');
-                    menuBtn.setAttribute('aria-expanded', 'true');
-                    menuBtn.innerHTML = '<i class="fas fa-times"></i>';
-                    document.querySelectorAll('.nav-menu-horizontal .dropdown').forEach(dropdown => {
-                        dropdown.classList.remove('open');
-                    });
-                });
-
-                menuBtn.addEventListener('mouseleave', () => {
-                    if (!navMenuToggle.classList.contains('active')) {
-                        navMenuToggle.classList.remove('active');
-                        menuBtn.setAttribute('aria-expanded', 'false');
-                        menuBtn.innerHTML = '<i class="fas fa-bars"></i>';
-                    }
-                });
-
-                navMenuToggle.addEventListener('mouseleave', () => {
-                    if (!menuBtn.matches(':hover')) {
-                        navMenuToggle.classList.remove('active');
-                        menuBtn.setAttribute('aria-expanded', 'false');
-                        menuBtn.innerHTML = '<i class="fas fa-bars"></i>';
-                        document.querySelectorAll('.nav-menu-toggle .dropdown').forEach(dropdown => {
-                            dropdown.classList.remove('open');
-                        });
-                    }
-                });
-            }
         }
 
         const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
@@ -148,23 +156,9 @@ async function loadCommonComponents() {
                         }
                     });
                     dropdown.classList.toggle('open');
-                    if (dropdown.closest('.nav-menu-horizontal') && dropdown.classList.contains('open')) {
-                        navMenuToggle.classList.remove('active');
-                        menuBtn.setAttribute('aria-expanded', 'false');
-                        menuBtn.innerHTML = '<i class="fas fa-bars"></i>';
-                    }
                 }
             });
         });
-
-        if (window.innerWidth >= 769) {
-            const horizontalDropdowns = document.querySelectorAll('.nav-menu-horizontal .dropdown');
-            horizontalDropdowns.forEach(dropdown => {
-                dropdown.addEventListener('mouseleave', () => {
-                    dropdown.classList.remove('open');
-                });
-            });
-        }
 
         document.addEventListener('click', (e) => {
             if (!e.target.closest('.dropdown') && !e.target.closest('.menu-btn')) {
@@ -174,9 +168,41 @@ async function loadCommonComponents() {
             }
         });
 
-        // Render news based on page
+        // Sticky navigation logic
+        const navContainer = document.querySelector('.nav-container');
+        const navPlaceholder = document.querySelector('.nav-placeholder');
+        const header = document.querySelector('.header-bg');
+        const contentBg = document.querySelector('.content-bg');
+        if (navContainer && navPlaceholder && header && contentBg) {
+            const debounce = (func, wait) => {
+                let timeout;
+                return () => {
+                    clearTimeout(timeout);
+                    timeout = setTimeout(func, wait);
+                };
+            };
+
+            const updateStickyNav = () => {
+                const headerHeight = header.offsetHeight;
+                const navHeight = navContainer.offsetHeight;
+                navPlaceholder.style.height = `${navHeight}px`; // Only nav height
+                contentBg.style.paddingTop = `1px`; // Fixed padding as requested
+                console.log('Header height:', headerHeight, 'Nav height:', navHeight, 'Placeholder height:', navHeight, 'Content padding-top:', '1px');
+                if (window.scrollY >= headerHeight) {
+                    navContainer.classList.add('sticky');
+                } else {
+                    navContainer.classList.remove('sticky');
+                }
+            };
+
+            window.addEventListener('scroll', debounce(updateStickyNav, 10));
+            window.addEventListener('resize', debounce(updateStickyNav, 10));
+            updateStickyNav(); // Initial check
+        }
+
         const pageCategory = document.body.dataset.category || null;
-        renderNews(pageCategory);
+        const pageSubCategory = document.body.dataset.subcategory || null;
+        renderNews(pageCategory, pageSubCategory);
     } catch (error) {
         console.error('Error in loadCommonComponents:', error);
     }
@@ -188,9 +214,8 @@ style.textContent = `
         width: 100%;
         position: relative;
         z-index: 1000;
-    }
-    .full-text {
-        display: none;
+        margin: 0;
+        padding: 0;
     }
 `;
 document.head.appendChild(style);
