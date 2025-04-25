@@ -73,10 +73,9 @@ async function renderNews(category = null, subCategory = null) {
                     <i class="fab fa-facebook-f"></i>
                 </a>
                 <a href="https://twitter.com/intent/tweet?text=${encodedTitle}&url=${encodedUrl}" class="share-btn twitter" target="_blank" aria-label="Share on Twitter" tabindex="0">
-    <svg class="x-icon" viewBox="0 0 24 24" width="1rem" height="1rem" fill="currentColor">
-        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-    </svg>
-</a>
+                    <svg class="x-icon" viewBox="0 0 24 24" width="1rem" height="1rem" fill="currentColor">
+                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                    </svg>
                 </a>
                 <a href="https://t.me/share/url?url=${encodedUrl}&text=${encodedTitle}" class="share-btn telegram" target="_blank" aria-label="Share on Telegram" tabindex="0">
                     <i class="fab fa-telegram-plane"></i>
@@ -129,77 +128,6 @@ async function loadCommonComponents() {
         const navLoaded = await loadComponent('/includes/navigation.html', '.top-wrapper');
         if (!navLoaded) throw new Error('Navigation failed to load');
 
-        const menuBtn = document.querySelector('.menu-btn');
-        const navMenuToggle = document.querySelector('.nav-menu-toggle');
-        if (menuBtn && navMenuToggle && window.innerWidth < 769) {
-            menuBtn.addEventListener('click', () => {
-                const isActive = navMenuToggle.classList.toggle('active');
-                menuBtn.setAttribute('aria-expanded', isActive);
-                menuBtn.innerHTML = isActive ? '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
-                if (isActive) {
-                    document.querySelectorAll('.nav-menu-horizontal .dropdown').forEach(dropdown => {
-                        dropdown.classList.remove('open');
-                    });
-                }
-            });
-        }
-
-        const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
-        dropdownToggles.forEach(toggle => {
-            toggle.addEventListener('click', (e) => {
-                const dropdown = toggle.closest('.dropdown');
-                e.preventDefault();
-                if (dropdown) {
-                    document.querySelectorAll('.dropdown').forEach(otherDropdown => {
-                        if (otherDropdown !== dropdown) {
-                            otherDropdown.classList.remove('open');
-                        }
-                    });
-                    dropdown.classList.toggle('open');
-                }
-            });
-        });
-
-        document.addEventListener('click', (e) => {
-            if (!e.target.closest('.dropdown') && !e.target.closest('.menu-btn')) {
-                document.querySelectorAll('.dropdown').forEach(dropdown => {
-                    dropdown.classList.remove('open');
-                });
-            }
-        });
-
-        // Sticky navigation logic
-        const navContainer = document.querySelector('.nav-container');
-        const navPlaceholder = document.querySelector('.nav-placeholder');
-        const header = document.querySelector('.header-bg');
-        const contentBg = document.querySelector('.content-bg');
-        if (navContainer && navPlaceholder && header && contentBg) {
-            const debounce = (func, wait) => {
-                let timeout;
-                return () => {
-                    clearTimeout(timeout);
-                    timeout = setTimeout(func, wait);
-                };
-            };
-
-            const updateStickyNav = () => {
-                const headerHeight = header.offsetHeight;
-                const navHeight = navContainer.offsetHeight;
-                navPlaceholder.style.height = `${navHeight}px`; // Only nav height
-                contentBg.style.paddingTop = `1px`; // Fixed padding as requested
-                console.log('Header height:', headerHeight, 'Nav height:', navHeight, 'Placeholder height:', navHeight, 'Content padding-top:', '1px');
-                if (window.scrollY >= headerHeight) {
-                    navContainer.classList.add('sticky');
-                } else {
-                    navContainer.classList.remove('sticky');
-                }
-            };
-
-            window.addEventListener('scroll', debounce(updateStickyNav, 10));
-            window.addEventListener('resize', debounce(updateStickyNav, 10));
-            updateStickyNav(); // Initial check
-        }
-
         const pageCategory = document.body.dataset.category || null;
         const pageSubCategory = document.body.dataset.subcategory || null;
         renderNews(pageCategory, pageSubCategory);
@@ -207,18 +135,6 @@ async function loadCommonComponents() {
         console.error('Error in loadCommonComponents:', error);
     }
 }
-
-const style = document.createElement('style');
-style.textContent = `
-    .top-wrapper {
-        width: 100%;
-        position: relative;
-        z-index: 1000;
-        margin: 0;
-        padding: 0;
-    }
-`;
-document.head.appendChild(style);
 
 document.addEventListener('DOMContentLoaded', () => {
     loadCommonComponents();
