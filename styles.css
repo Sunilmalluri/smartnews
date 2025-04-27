@@ -1,3 +1,22 @@
+/* Ensure the body uses flexbox to push the footer to the bottom */
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.content-bg {
+    flex: 1 0 auto; /* Ensure content takes up available space */
+}
+
+/* Footer wrapper styles */
+.footer-wrapper {
+    flex-shrink: 0; /* Prevent footer from shrinking */
+}
+
 /* Container for added side space */
 .container {
     max-width: 1200px;
@@ -223,7 +242,7 @@
     }
 
     .news-excerpt, .full-text {
-        font-size: 0.95rem;
+        font-size: 1.0rem;
     }
 
     .social-share {
