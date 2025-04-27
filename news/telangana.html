@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="తాజా ఆంధ్రప్రదేశ్ వార్తలు - కువైట్ తెలుగు వార్తలు">
-    <title>ఆంధ్రప్రదేశ్ వార్తలు - కువైట్ తెలుగు వార్తలు</title>
+    <meta name="description" content="తాజా తెలంగాణ వార్తలు - కువైట్ తెలుగు వార్తలు">
+    <title>తెలంగాణ వార్తలు - కువైట్ తెలుగు వార్తలు</title>
     <link rel="stylesheet" href="../styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <script src="../data/news.js" defer></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Telugu&family=Ramabhadra&display=swap" rel="stylesheet">
+    <script src="../data/news-telangana.js" defer></script>
     <script src="../scripts.js" defer></script>
 </head>
 <body data-category="Telangana">
@@ -17,29 +18,10 @@
             <main class="main-content">
                 <section class="news-section">
                     <h2 class="section-title">తెలంగాణ వార్తలు</h2>
-                    <div class="news-grid">
-                        <!-- News articles will be injected here by scripts.js -->
-                    </div>
+                    <div class="news-grid"></div>
                 </section>
             </main>
         </div>
     </div>
-    <script>
-        function toggleReadMore(newsId) {
-            event.preventDefault();
-            const newsCard = document.getElementById(newsId);
-            const readMoreLink = newsCard.querySelector('.read-more');
-            if (!newsCard || !readMoreLink) {
-                console.error(`News card or read-more link not found for ID: ${newsId}`);
-                return;
-            }
-            newsCard.classList.toggle('expanded');
-            if (newsCard.classList.contains('expanded')) {
-                readMoreLink.innerHTML = 'తక్కువ చదవండి <i class="fas fa-arrow-up"></i>';
-            } else {
-                readMoreLink.innerHTML = 'మరిన్ని చదవండి <i class="fas fa-arrow-right"></i>';
-            }
-        }
-    </script>
 </body>
 </html>
