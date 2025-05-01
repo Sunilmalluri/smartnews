@@ -25,10 +25,16 @@ async function fetchNews(category = null, subCategory = null, retries = 3, delay
             }
             let filteredData = window.newsData;
             if (category) {
-                filteredData = filteredData.filter(article => article.category === category);
+                filteredData = filteredData.filter(article => 
+                    article.category && category && 
+                    article.category.toLowerCase() === category.toLowerCase()
+                );
             }
             if (subCategory && subCategory !== 'All') {
-                filteredData = filteredData.filter(article => article.subCategory === subCategory);
+                filteredData = filteredData.filter(article => 
+                    article.subCategory && subCategory && 
+                    article.subCategory.toLowerCase() === subCategory.toLowerCase()
+                );
             }
             return filteredData;
         } catch (error) {
@@ -37,6 +43,140 @@ async function fetchNews(category = null, subCategory = null, retries = 3, delay
         }
     }
     return [];
+}
+
+function generateSocialShare(articleId) {
+    const article = window.newsData.find(a => a.id === articleId);
+    if (!article) return '';
+
+    const articleUrl = `${window.location.origin}${window.location.pathname}#${article.id}`;
+    const encodedTitle = encodeURIComponent(article.title);
+    const encodedUrl = encodeURIComponent(articleUrl);
+    return `
+        <div class="social-share">
+            <a href="https://wa.me/?text=${encodedTitle}%20${encodedUrl}" class="share-btn whatsapp" target="_blank" aria-label="Share on WhatsApp" tabindex="0">
+                <i class="fab fa-whatsapp"></i>
+            </a>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}" class="share-btn facebook" target="_blank" aria-label="Share on Facebook" tabindex="0">
+                <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="https://twitter.com/intent/tweet?text=${encodedTitle}&url=${encodedUrl}" class="share-btn twitter" target="_blank" aria-label="Share on Twitter" tabindex="0">
+                <svg class="x-icon" viewBox="0 0 24 24" width="1rem" height="1rem" fill="currentColor">
+                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                </svg>
+            </a>
+            <a href="https://t.me/share/url?url=${encodedUrl}&text=${encodedTitle}" class="share-btn telegram" target="_blank" aria-label="Share on Telegram" tabindex="0">
+                <i class="fab fa-telegram-plane"></i>
+            </a>
+        </div>
+    `;
+}
+
+async function fetchGoldPriceIndia(retries = 3, delay = 100) {
+    for (let i = 0; i < retries; i++) {
+        try {
+            if (typeof window.goldPriceIndiaData === 'undefined' || !Array.isArray(window.goldPriceIndiaData)) {
+                if (i === retries - 1) {
+                    throw new Error('goldPriceIndiaData is not defined or not an array after retries.');
+                }
+                await new Promise(resolve => setTimeout(resolve, delay));
+                continue;
+            }
+            return window.goldPriceIndiaData;
+        } catch (error) {
+            console.error('Error fetching India gold price data:', error.message);
+            return [];
+        }
+    }
+    return [];
+}
+
+async function fetchGoldPriceGulf(retries = 3, delay = 100) {
+    for (let i = 0; i < retries; i++) {
+        try {
+            if (typeof window.goldPriceGulfData === 'undefined' || !Array.isArray(window.goldPriceGulfData)) {
+                if (i === retries - 1) {
+                    throw new Error('goldPriceGulfData is not defined or not an array after retries.');
+                }
+                await new Promise(resolve => setTimeout(resolve, delay));
+                continue;
+            }
+            return window.goldPriceGulfData;
+        } catch (error) {
+            console.error('Error fetching Gulf gold price data:', error.message);
+            return [];
+        }
+    }
+    return [];
+}
+
+function renderGoldTables(goldType = '22K') {
+    // Fetch elements
+    const indiaTableBody = document.querySelector('.gold-price-table-body-india');
+    const gulfTableBody = document.querySelector('.gold-price-table-body-gulf');
+    const dateElement = document.querySelector('#gold-price-date');
+
+    if (!indiaTableBody || !gulfTableBody || !dateElement) {
+        console.error('Table bodies or date element not found');
+        return;
+    }
+
+    // Fetch data
+    Promise.all([fetchGoldPriceIndia(), fetchGoldPriceGulf()]).then(([indiaPrices, gulfPrices]) => {
+        // Set the date (using India data as reference)
+        if (indiaPrices.length > 0) {
+            dateElement.textContent = indiaPrices[0].date;
+        } else if (gulfPrices.length > 0) {
+            dateElement.textContent = gulfPrices[0].date;
+        } else {
+            dateElement.textContent = 'N/A';
+        }
+
+        // Render India table
+        if (indiaPrices.length === 0) {
+            indiaTableBody.innerHTML = '<tr><td colspan="3">భారతదేశ బంగారం ధరలు అందుబాటులో లేవు.</td></tr>';
+        } else {
+            indiaTableBody.innerHTML = indiaPrices.map(price => `
+                <tr>
+                    <td>${price.location}</td>
+                    <td>${price.currencySymbol}${price[`price_${goldType.toLowerCase()}_1g`]}</td>
+                    <td>${price.currencySymbol}${price[`price_${goldType.toLowerCase()}_10g`]}</td>
+                </tr>
+            `).join('');
+        }
+
+        // Render Gulf table
+        if (gulfPrices.length === 0) {
+            gulfTableBody.innerHTML = '<tr><td colspan="4">గల్ఫ్ దేశాల బంగారం ధరలు అందుబాటులో లేవు.</td></tr>';
+        } else {
+            gulfTableBody.innerHTML = gulfPrices.map(price => `
+                <tr>
+                    <td>${price.location}</td>
+                    <td>${price.currencySymbol}${price[`price_${goldType.toLowerCase()}_1g`]}</td>
+                    <td>${price.currencySymbol}${price[`price_${goldType.toLowerCase()}_10g`]}</td>
+                    <td>₹${price[`price_${goldType.toLowerCase()}_10g_inr`]}</td>
+                </tr>
+            `).join('');
+        }
+    }).catch(error => {
+        console.error('Error rendering gold tables:', error);
+        indiaTableBody.innerHTML = '<tr><td colspan="3">భారతదేశ బంగారం ధరలు అందుబాటులో లేవు.</td></tr>';
+        gulfTableBody.innerHTML = '<tr><td colspan="4">గల్ఫ్ దేశాల బంగారం ధరలు అందుబాటులో లేవు.</td></tr>';
+    });
+}
+
+// Function to update tables based on dropdown selection
+function updateGoldTables() {
+    const goldTypeFilter = document.querySelector('#gold-type-filter');
+    if (goldTypeFilter) {
+        const selectedGoldType = goldTypeFilter.value;
+        renderGoldTables(selectedGoldType);
+    }
+}
+
+async function renderGoldPrice() {
+    // Initial render with default gold type (22K)
+    renderGoldTables('22K');
 }
 
 async function renderNews(category = null, subCategory = null) {
@@ -61,28 +201,6 @@ async function renderNews(category = null, subCategory = null) {
             .replace(/<\/li>$/, '</li></ul>')
             .replace(/^/, '<p>')
             .replace(/$/, '</p>');
-        const articleUrl = `${window.location.origin}${window.location.pathname}#${article.id}`;
-        const encodedTitle = encodeURIComponent(article.title);
-        const encodedUrl = encodeURIComponent(articleUrl);
-        const socialShare = `
-            <div class="social-share">
-                <a href="https://wa.me/?text=${encodedTitle}%20${encodedUrl}" class="share-btn whatsapp" target="_blank" aria-label="Share on WhatsApp" tabindex="0">
-                    <i class="fab fa-whatsapp"></i>
-                </a>
-                <a href="https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}" class="share-btn facebook" target="_blank" aria-label="Share on Facebook" tabindex="0">
-                    <i class="fab fa-facebook-f"></i>
-                </a>
-                <a href="https://twitter.com/intent/tweet?text=${encodedTitle}&url=${encodedUrl}" class="share-btn twitter" target="_blank" aria-label="Share on Twitter" tabindex="0">
-    <svg class="x-icon" viewBox="0 0 24 24" width="1rem" height="1rem" fill="currentColor">
-        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-    </svg>
-</a>
-                </a>
-                <a href="https://t.me/share/url?url=${encodedUrl}&text=${encodedTitle}" class="share-btn telegram" target="_blank" aria-label="Share on Telegram" tabindex="0">
-                    <i class="fab fa-telegram-plane"></i>
-                </a>
-            </div>
-        `;
         return `
             <article class="news-card preview" id="${article.id}" tabindex="0" aria-expanded="false">
                 <div class="news-image-wrapper">
@@ -96,7 +214,6 @@ async function renderNews(category = null, subCategory = null) {
                     </div>
                     <p class="news-excerpt">${article.excerpt}</p>
                     <div class="full-text">${fullText}</div>
-                    ${socialShare}
                 </div>
             </article>
         `;
@@ -105,13 +222,125 @@ async function renderNews(category = null, subCategory = null) {
     document.querySelectorAll('.news-card').forEach(card => {
         card.addEventListener('click', () => {
             const fullText = card.querySelector('.full-text');
-            const imageWrapper = card.querySelector('.news-image-wrapper');
             const isExpanded = card.getAttribute('aria-expanded') === 'true';
             fullText.style.display = isExpanded ? 'none' : 'block';
             card.setAttribute('aria-expanded', !isExpanded);
             card.classList.toggle('preview', isExpanded);
             card.classList.toggle('expanded', !isExpanded);
-            imageWrapper.classList.toggle('expanded', !isExpanded);
+
+            let socialShare = card.querySelector('.social-share');
+            if (!isExpanded) {
+                if (!socialShare) {
+                    const socialShareHTML = generateSocialShare(card.id);
+                    card.querySelector('.news-content').insertAdjacentHTML('beforeend', socialShareHTML);
+                }
+            } else {
+                if (socialShare) {
+                    socialShare.remove();
+                }
+            }
+        });
+    });
+}
+
+async function renderHomeNews() {
+    const featuredContainer = document.querySelector('.featured-news-grid');
+    const latestContainer = document.querySelector('.latest-news-grid');
+    if (!featuredContainer || !latestContainer) {
+        console.error('Featured or latest news container not found');
+        return;
+    }
+
+    const articles = await fetchNews();
+    if (articles.length === 0) {
+        featuredContainer.innerHTML = '<p>వార్తలు అందుబాటులో లేవు.</p>';
+        latestContainer.innerHTML = '<p>వార్తలు అందుబాటులో లేవు.</p>';
+        return;
+    }
+
+    let featuredArticles = articles.filter(article => article.featured === true);
+    let latestArticles = articles.filter(article => !article.featured);
+
+    if (featuredArticles.length === 0) {
+        featuredArticles = [articles[0]];
+        latestArticles = articles.slice(1);
+    }
+
+    featuredContainer.innerHTML = featuredArticles.map(article => {
+        const fullText = article.fullText
+            .replace(/\n\n/g, '</p><p>')
+            .replace(/\n- /g, '</li><li>')
+            .replace(/\n/g, ' ')
+            .replace(/<li>/, '<ul><li>')
+            .replace(/<\/li>$/, '</li></ul>')
+            .replace(/^/, '<p>')
+            .replace(/$/, '</p>');
+        return `
+            <article class="featured-card" id="${article.id}" tabindex="0" aria-expanded="false">
+                <div class="featured-image-wrapper">
+                    <img src="${article.image}" alt="${article.alt}" class="featured-image" loading="lazy">
+                </div>
+                <div class="featured-content">
+                    <h3 class="featured-title">${article.title}</h3>
+                    <div class="featured-meta">
+                        <span><i class="far fa-calendar-alt"></i> ${article.date}</span>
+                        <span><i class="far fa-clock"></i> ${article.time}</span>
+                    </div>
+                    <p class="featured-excerpt">${article.excerpt}</p>
+                    <div class="featured-full-text">${fullText}</div>
+                </div>
+            </article>
+        `;
+    }).join('');
+
+    latestContainer.innerHTML = latestArticles.map(article => {
+        const fullText = article.fullText
+            .replace(/\n\n/g, '</p><p>')
+            .replace(/\n- /g, '</li><li>')
+            .replace(/\n/g, ' ')
+            .replace(/<li>/, '<ul><li>')
+            .replace(/<\/li>$/, '</li></ul>')
+            .replace(/^/, '<p>')
+            .replace(/$/, '</p>');
+        return `
+            <article class="latest-card preview" id="${article.id}" tabindex="0" aria-expanded="false">
+                <div class="latest-image-wrapper">
+                    <img src="${article.image}" alt="${article.alt}" class="latest-image" loading="lazy">
+                </div>
+                <div class="latest-content">
+                    <h3 class="latest-title">${article.title}</h3>
+                    <div class="latest-meta">
+                        <span><i class="far fa-calendar-alt"></i> ${article.date}</span>
+                        <span><i class="far fa-clock"></i> ${article.time}</span>
+                    </div>
+                    <p class="latest-excerpt">${article.excerpt}</p>
+                    <div class="latest-full-text">${fullText}</div>
+                </div>
+            </article>
+        `;
+    }).join('');
+
+    document.querySelectorAll('.featured-card, .latest-card').forEach(card => {
+        card.addEventListener('click', () => {
+            const fullText = card.querySelector('.featured-full-text, .latest-full-text');
+            const content = card.querySelector('.featured-content, .latest-content');
+            const isExpanded = card.getAttribute('aria-expanded') === 'true';
+            fullText.style.display = isExpanded ? 'none' : 'block';
+            card.setAttribute('aria-expanded', !isExpanded);
+            card.classList.toggle('preview', isExpanded);
+            card.classList.toggle('expanded', !isExpanded);
+
+            let socialShare = card.querySelector('.social-share');
+            if (!isExpanded) {
+                if (!socialShare) {
+                    const socialShareHTML = generateSocialShare(card.id);
+                    content.insertAdjacentHTML('beforeend', socialShareHTML);
+                }
+            } else {
+                if (socialShare) {
+                    socialShare.remove();
+                }
+            }
         });
     });
 }
@@ -129,7 +358,6 @@ async function loadCommonComponents() {
         const navLoaded = await loadComponent('/includes/navigation.html', '.top-wrapper');
         if (!navLoaded) throw new Error('Navigation failed to load');
 
-        // Load Footer
         const footerWrapper = document.querySelector('.footer-wrapper');
         if (footerWrapper) {
             const footerLoaded = await loadComponent('/includes/footer.html', '.footer-wrapper');
@@ -178,7 +406,6 @@ async function loadCommonComponents() {
             }
         });
 
-        // Sticky navigation logic
         const navContainer = document.querySelector('.nav-container');
         const navPlaceholder = document.querySelector('.nav-placeholder');
         const header = document.querySelector('.header-bg');
@@ -195,8 +422,8 @@ async function loadCommonComponents() {
             const updateStickyNav = () => {
                 const headerHeight = header.offsetHeight;
                 const navHeight = navContainer.offsetHeight;
-                navPlaceholder.style.height = `${navHeight}px`; // Only nav height
-                contentBg.style.paddingTop = `1px`; // Fixed padding as requested
+                navPlaceholder.style.height = `${navHeight}px`;
+                contentBg.style.paddingTop = `1px`;
                 console.log('Header height:', headerHeight, 'Nav height:', navHeight, 'Placeholder height:', navHeight, 'Content padding-top:', '1px');
                 if (window.scrollY >= headerHeight) {
                     navContainer.classList.add('sticky');
@@ -207,12 +434,18 @@ async function loadCommonComponents() {
 
             window.addEventListener('scroll', debounce(updateStickyNav, 10));
             window.addEventListener('resize', debounce(updateStickyNav, 10));
-            updateStickyNav(); // Initial check
+            updateStickyNav();
         }
 
         const pageCategory = document.body.dataset.category || null;
         const pageSubCategory = document.body.dataset.subcategory || null;
-        renderNews(pageCategory, pageSubCategory);
+        if (pageCategory === 'Home') {
+            renderHomeNews();
+        } else if (pageCategory === 'gold-price') {
+            renderGoldPrice();
+        } else {
+            renderNews(pageCategory, pageSubCategory);
+        }
     } catch (error) {
         console.error('Error in loadCommonComponents:', error);
     }
