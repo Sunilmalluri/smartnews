@@ -1,91 +1,188 @@
-<div class="header-bg">
-  <header class="header-container">
-    <div class="logo-container">
-      <img src="/images/logo.png" alt="Kuwait News Logo" class="logo">
-      <div class="logo-text">
-        <h1 class="site-title">Think</h1>
-        <p class="site-tagline">Beyond The Headlines</p>
+<!DOCTYPE html>
+<html lang="te">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gulf Andhra</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Telugu:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    /* Base Styles */
+    body {
+      margin: 0;
+      font-family: 'Noto Sans Telugu', sans-serif;
+    }
+    
+    /* Header Container */
+    .header-container {
+      width: 100%;
+      background: white;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    
+    /* Gold Price Ticker */
+    .ticker-bar {
+      background: #333;
+      color: white;
+      padding: 8px 0;
+    }
+    
+    .ticker-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 15px;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+    
+    /* Theme Ribbon */
+    .theme-ribbon {
+      background: #f5f5f5;
+      border-bottom: 1px solid #e0e0e0;
+      padding: 10px 0;
+    }
+    
+    .theme-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      padding: 0 15px;
+    }
+    
+    .theme-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 500;
+      font-size: 15px;
+    }
+    
+    .theme-item i {
+      font-size: 18px;
+    }
+    
+    .agriculture { color: #388e3c; }
+    .education { color: #1976d2; }
+    .justice { color: #d32f2f; }
+    .medicine { color: #7b1fa2; }
+    
+    /* Main Header */
+    .main-header {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    
+    .logo {
+      height: 50px;
+      width: auto;
+    }
+    
+    .header-text h1 {
+      margin: 0;
+      font-size: 28px;
+      color: #d32f2f;
+      font-weight: 700;
+    }
+    
+    .header-text p {
+      margin: 0;
+      font-size: 14px;
+      color: #333;
+    }
+    
+    /* Navigation - Keep your existing nav styles */
+    
+    /* Responsive Styles */
+    @media (max-width: 768px) {
+      .theme-container {
+        gap: 15px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      
+      .theme-item {
+        font-size: 13px;
+        gap: 5px;
+      }
+      
+      .theme-item i {
+        font-size: 16px;
+      }
+      
+      .main-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+      }
+      
+      .logo-container {
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="header-container">
+    <!-- Gold Price Ticker -->
+    <div class="ticker-bar">
+      <div class="ticker-content">
+        <marquee>గోల్డ్ రేటు: 24K - ₹7,599 | 22K - ₹7,127 | KWD రేటు: ₹274.69 | SAR రేటు: ₹22.47 | AED రేటు: ₹22.95 | OMR రేటు: ₹218.96 | QAR రేటు: ₹23.11 | BHD రేటు: ₹223.57 | విదేశీ వార్తలు | తాజా అప్డేట్లు</marquee>
       </div>
     </div>
-  </header>
-</div>
-
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Open+Sans:ital,wght@0,400;1,400&display=swap');
-
-  .header-bg {
-    background: #fff;
-    width: 100%;
-    padding: 1rem 0 0 0;
-    margin: 0;
-    position: relative;
-    z-index: 1001;
-    box-sizing: border-box;
-  }
-
-  .header-container {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 0 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    box-sizing: border-box;
-  }
-
-  .logo-container {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-  }
-
-  .logo {
-    width: 60px;
-    height: auto;
-  }
-
-  .logo-text {
-    color: #000;
-  }
-
-  .site-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.9rem;
-    font-weight: 700;
-    margin: 0;
-    letter-spacing: 0.05em;
-    color: #000;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
-  }
-
-  .site-tagline {
-    font-family: 'Open Sans', sans-serif;
-    font-size: 0.7rem;
-    font-weight: 400;
-    font-style: italic;
-    margin: 0;
-    color: #333;
-    letter-spacing: 0.03em;
-  }
-
-  @media (max-width: 768px) {
-    .header-container {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 0.9rem;
-    }
-
-    .logo {
-      width: 50px;
-    }
-
-    .site-title {
-      font-size: 1.6rem;
-    }
-
-    .site-tagline {
-      font-size: 0.7rem;
-    }
-  }
-</style>
+    
+    <!-- Theme Ribbon -->
+    <div class="theme-ribbon">
+      <div class="theme-container">
+        <div class="theme-item agriculture">
+          <i class="fas fa-tractor"></i>
+          <span>వ్యవసాయం</span>
+        </div>
+        <div class="theme-item education">
+          <i class="fas fa-graduation-cap"></i>
+          <span>విద్య</span>
+        </div>
+        <div class="theme-item justice">
+          <i class="fas fa-gavel"></i>
+          <span>న్యాయం</span>
+        </div>
+        <div class="theme-item medicine">
+          <i class="fas fa-medkit"></i>
+          <span>వైద్యం</span>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Main Header -->
+    <div class="main-header">
+      <div class="logo-container">
+        <img src="/images/logo.png" alt="Gulf Andhra Logo" class="logo">
+        <div class="header-text">
+          <h1>గల్ఫ్ ఆంధ్ర</h1>
+          <p>తాజా వార్తలు, సమగ్ర విశ్లేషణ</p>
+        </div>
+      </div>
+      
+      <!-- Your existing search or other elements can go here -->
+    </div>
+    
+    <!-- Your existing navigation will go here -->
+  </div>
+  
+  <!-- Rest of your page content -->
+</body>
+</html>
